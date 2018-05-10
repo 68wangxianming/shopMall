@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'lib-flexible'
 import { Button, Row, Col } from 'vant'
+require('!style-loader!css-loader!less-loader!./common/less/global.less');
+
 
 Vue.config.productionTip = false
 Vue.use(Button).use(Row).use(Col)
