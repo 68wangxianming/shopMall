@@ -3,13 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'lib-flexible'
-import { Button, Row, Col } from 'vant'
-require('!style-loader!css-loader!less-loader!./common/less/global.less');
-
+import { Button, Row, Col ,Search , Swipe , SwipeItem , Lazyload  } from 'vant'
+import axios from 'axios'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+// import 'lib-flexible'
+// require('!style-loader!css-loader!less-loader!./common/less/global.less');
 
 Vue.config.productionTip = false
-Vue.use(Button).use(Row).use(Col)
+Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload)
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
+Vue.prototype.axios = axios
 
 /* eslint-disable no-new */
 new Vue({
