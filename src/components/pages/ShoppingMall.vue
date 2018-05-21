@@ -23,8 +23,8 @@
     </div>
 
     <div class="type-bar">
-      <div  v-for="(cate,index) in category" :key="index" >
-        <img v-lazy="cate.image" width="90%" />
+      <div v-for="(cate,index) in category" :key="index">
+        <img v-lazy="cate.image" width="90%"/>
         <span>{{cate.mallCategoryName}}</span>
       </div>
     </div>
@@ -39,49 +39,77 @@
       <swiper-slide v-for=" (item ,index) in recommendGoods" :key="index">
         <div class="recommend-item">
 
-          <img :src="item.image" width="80%" />
+          <img :src="item.image" width="80%"/>
           <div>{{item.goodsName}}</div>
-          <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+          <div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice}})</div>
 
         </div>
       </swiper-slide>
     </swiper>
+
+    <!--floor one area-->
+    <floorComponent :floorData="floor1"></floorComponent>
   </div>
 </template>
 
 <script>
+  import floorComponent from '@/components/pages/floorComponent'
+  import {toMoney} from '@/filter/moneyFilter.js'
+
   export default {
     created() {
       this.axios({
-        url: 'https://www.easy-mock.com/mock/5af536578efab658654cbcdb/SmileVue/index',
-        method: 'get',
-      }).then((res)=>{
-        if(res.status==200){
-          this.category=res.data.data.category;
-          this.adBanner = res.data.data.advertesPicture //获得广告图片
-          this.recommendGoods = res.data.data.recommend  //推荐商品
-          console.log(this.category);
+        url:
+          "https://www.easy-mock.com/mock/5af536578efab658654cbcdb/SmileVue/index",
+        method: "get"
+      }).then(res => {
+        if (res.status == 200) {
+          this.category = res.data.data.category;
+          this.adBanner = res.data.data.advertesPicture; //获得广告图片
+          this.recommendGoods = res.data.data.recommend; //推荐商品
+          this.floor1 = res.data.data.floor1; //楼层1数据
+          this.floor1_0 = this.floor1[0];
+          this.floor1_1 = this.floor1[1];
+          this.floor1_2 = this.floor1[2];
         }
-      })
+      });
     },
     data() {
       return {
-        swiperOption:{
-          slidesPerView:3
+        swiperOption: {
+          slidesPerView: 3
         },
-        locationIcon: require('../../assets/img/location.png'),
+        locationIcon: require("../../assets/img/location.png"),
         bannerPicArray: [
-          {imageUrl: 'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic001.jpg'},
-          {imageUrl: 'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic002.jpg'},
-          {imageUrl: 'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg'},
+          {
+            imageUrl:
+              "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic001.jpg"
+          },
+          {
+            imageUrl:
+              "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic002.jpg"
+          },
+          {
+            imageUrl:
+              "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg"
+          }
         ],
-        category:[],
-        adBanner:'',
-        recommendGoods:[]
+        category: [],
+        adBanner: "",
+        recommendGoods: [],
+        floor1: [],
+        floor1_0: [],
+        floor1_1: [],
+        floor1_2: []
+      };
+    },
+    components: {floorComponent},
+    filters:{
+      moneyFilter(money){
+        return toMoney(money)
       }
     },
-
-  }
+  };
 </script>
 
 <style scoped>
@@ -104,8 +132,8 @@
   }
 
   .location-icon {
-    padding-top: .2rem;
-    padding-left: .3rem;
+    padding-top: 0.2rem;
+    padding-left: 0.3rem;
   }
 
   .swiper-area {
@@ -115,29 +143,71 @@
     overflow: hidden;
   }
 
-  .type-bar{
+  .type-bar {
     background-color: #fff;
-    margin:0 .3rem .3rem .3rem;
-    border-radius: .3rem;
-    font-size:14px;
+    margin: 0 0.3rem 0.3rem 0.3rem;
+    border-radius: 0.3rem;
+    font-size: 14px;
     display: flex;
-    flex-direction:row;
-    flex-wrap:nowrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
-  .type-bar div{
-    padding: .3rem;
+
+  .type-bar div {
+    padding: 0.3rem;
     font-size: 12px;
     text-align: center;
   }
 
-  .recommend-body{
+  .recommend-body {
     border-bottom: 1px solid #eee;
   }
 
-  .recommend-item{
-    width:99%;
+  .recommend-item {
+    width: 99%;
     border-right: 1px solid #eee;
     font-size: 12px;
     text-align: center;
   }
+
+  .floor-anomaly {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .floor-anomaly div {
+    width: 10rem;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+
+  .floor-one {
+    border-right: 1px solid #ddd;
+  }
+
+  .floor-two {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .floor-rule {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #fff;
+
+  }
+
+  .floor-rule div {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 10rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .floor-rule div:nth-child(odd) {
+    border-right: 1px solid #ddd;
+  }
+
 </style>
