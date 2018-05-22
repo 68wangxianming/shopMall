@@ -49,6 +49,8 @@
 
     <!--floor one area-->
     <floorComponent :floorData="floor1"></floorComponent>
+
+
   </div>
 </template>
 
