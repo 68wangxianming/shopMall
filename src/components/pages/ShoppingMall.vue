@@ -61,8 +61,7 @@
   export default {
     created() {
       this.axios({
-        url:
-          "https://www.easy-mock.com/mock/5af536578efab658654cbcdb/SmileVue/index",
+        url:this.url.getShopingMailInfo,
         method: "get"
       }).then(res => {
         if (res.status == 200) {
@@ -106,8 +105,8 @@
       };
     },
     components: {floorComponent},
-    filters:{
-      moneyFilter(money){
+    filters: {
+      moneyFilter(money) {
         return toMoney(money)
       }
     },
