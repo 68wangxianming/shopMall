@@ -4,8 +4,9 @@ let router = new Router()
 router.get('/', async (ctx) => {
   ctx.body = 'home page'
 })
-router.get('/register', async (ctx) => {
-  ctx.body = 'register page'
+router.post('/register', async (ctx) => {
+  console.log(ctx.request.body);
+  ctx.body = '恭喜发财'
 })
 
 module.exports = router

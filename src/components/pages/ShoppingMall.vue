@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import floorComponent from "@/components/pages/floorComponent";
+import floorComponent from "@/components/pages/component/floorComponent";
 import { toMoney } from "@/filter/moneyFilter.js";
 
 export default {

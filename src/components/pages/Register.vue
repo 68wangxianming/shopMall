@@ -6,7 +6,6 @@
       left-arrow
       @click-left="goBack"
     />
-
     <div class="register-panel">
       <van-field
         v-model="username"
@@ -14,7 +13,7 @@
         icon="clear"
         placeholder="请输入用户名"
         required
-        @click-icon="username = ''"
+        @click-icon="username=''"
       />
 
       <van-field
@@ -25,14 +24,16 @@
         required
       />
       <div class="register-button">
-        <van-button type="primary" size="large">马上注册</van-button>
+        <van-button type="primary" @click="axiosRegisterUser" size="large">马上注册</van-button>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import url from '@/api/serviceAPI.config.js'
+
   export default {
     data() {
       return {
@@ -43,19 +44,36 @@
     methods: {
       goBack() {
         this.$router.go(-1)
+      },
+      axiosRegisterUser() {
+        axios({
+          url: url.registerUser,
+          method: 'post',
+          data: {
+            username: this.username,
+            password: this.password
+          }
+        })
+          .then(response => {
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     },
   }
 </script>
 
 <style scoped>
-  .register-panel{
-    width:96%;
+  .register-panel {
+    width: 96%;
     border-radius: 5px;
-    margin:20px auto;
-    padding-bottom:50px;
+    margin: 20px auto;
+    padding-bottom: 50px;
   }
-  .register-button{
-    padding-top:10px;
+
+  .register-button {
+    padding-top: 10px;
   }
 </style>
