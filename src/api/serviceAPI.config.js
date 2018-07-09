@@ -3,7 +3,8 @@ const LOCALURL = 'http://localhost:5000/'
 const URL = {
   getShopingMailInfo: BASEURL + 'index',
   getGoodsInfo: BASEURL + 'getGoodsInfo',
-  registerUser: LOCALURL + 'user/register'
+  registerUser: LOCALURL + 'user/register',
+  login: LOCALURL + 'user/login'
 }
 
 

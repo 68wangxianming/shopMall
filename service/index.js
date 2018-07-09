@@ -16,22 +16,22 @@ router.use('/home', home.routes())
 
 app.use(router.routes())
 app.use(router.allowedMethods())
-// ;(async () => {
-//   await connect()
-//   initSchemas()
-//   const User = mongoose.model('User')
-//   let oneUser = new User({userName: '社会主义', password: '12345'})
-//   oneUser.save().then(() => {
-//     console.log('插入成功')
-//   })
-//   let user =await User.findOne({}).exec()
-//   console.log('给我出来');
-//   console.log(user);
-// })()
+;(async () => {
+  await connect()
+  initSchemas()
+  // const User = mongoose.model('User')
+  // let oneUser = new User({userName: '社会主义', password: '12345'})
+  // oneUser.save().then(() => {
+  //   console.log('插入成功')
+  // })
+  // let user =await User.findOne({}).exec()
+  // console.log('给我出来');
+  // console.log(user);
+})()
 
-app.use(async (ctx) => {
-  ctx.body = '<p>hello koa2</p>'
-})
+// app.use(async (ctx) => {
+//   ctx.body = '<p>hello koa2</p>'
+// })
 
 app.listen(5000, () => {
   console.log('服务成功');
