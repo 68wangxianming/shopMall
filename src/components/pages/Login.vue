@@ -37,15 +37,21 @@
 <script>
   import axios from 'axios'
   import url from '@/api/serviceAPI.config.js'
-  import { Toast } from 'vant'
+  import {Toast} from 'vant'
+
   export default {
     data() {
       return {
         username: '',
         password: '',
         openLoading: false,    //是否开启用户的Loading
-        usernameErrorMsg:'',   //当用户名出现错误的时候
-        passwordErrorMsg:'',   //当密码出现错误的时候
+        usernameErrorMsg: '',   //当用户名出现错误的时候
+        passwordErrorMsg: '',   //当密码出现错误的时候
+      }
+    },
+    created() {
+      if(localStorage.getItem('userName')) {
+        this.$router.push('/')
       }
     },
     methods: {
@@ -54,27 +60,44 @@
       },
 
       //*****注册用户的实行方法*****
-      LoginAction(){
+      LoginAction() {
 
         this.checkForm() && this.axiosLoginUser()
       },
 
       //*******axios注册用户方法*******
-      axiosLoginUser(){
+      axiosLoginUser() {
         //先把按钮进行loading状态，防止重复提交
         this.openLoading = true
 
         axios({
           url: url.login,
           method: 'post',
-          data:{
-            userName:this.username,
-            password:this.password
+          data: {
+            userName: this.username,
+            password: this.password
           }
         })
           .then(response => {
-            console.log(response);
+            if (response.data.code == 200 && response.data.message) {
+              console.log(this.userName);
+              new Promise((resolve, reject) => {
+                localStorage.setItem('userName', this.username)
+                setTimeout(() => {
+                  resolve()
+                }, 500)
+              }).then(()=>{
+                this.openLoading = false
+                Toast.success('登录成功')
+                this.$router.push('/')
+              })
 
+
+
+            } else {
+              this.openLoading = false
+              Toast.fail('登录失败')
+            }
           })
           .catch((error) => {
 
@@ -82,19 +105,19 @@
 
       },
       //**** 客户端验证
-      checkForm(){
-        let isOk= true
-        if(this.username.length<5){
-          this.usernameErrorMsg="用户名不能小于5位"
-          isOk= false
-        }else{
-          this.usernameErrorMsg=''
+      checkForm() {
+        let isOk = true
+        if (this.username.length < 5) {
+          this.usernameErrorMsg = "用户名不能小于5位"
+          isOk = false
+        } else {
+          this.usernameErrorMsg = ''
         }
-        if(this.password.length<6){
-          this.passwordErrorMsg="密码不能少于6位"
-          isOk= false
-        }else{
-          this.passwordErrorMsg=''
+        if (this.password.length < 6) {
+          this.passwordErrorMsg = "密码不能少于6位"
+          isOk = false
+        } else {
+          this.passwordErrorMsg = ''
         }
         return isOk
       }
@@ -105,13 +128,14 @@
 </script>
 
 <style scoped>
-  .register-panel{
-    width:96%;
+  .register-panel {
+    width: 96%;
     border-radius: 5px;
-    margin:20px auto;
-    padding-bottom:50px;
+    margin: 20px auto;
+    padding-bottom: 50px;
   }
-  .register-button{
-    padding-top:10px;
+
+  .register-button {
+    padding-top: 10px;
   }
 </style>
