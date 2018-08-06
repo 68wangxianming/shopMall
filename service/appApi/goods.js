@@ -60,7 +60,7 @@ router.get('/insertAllCategorySub', async (ctx) => {
   })
   ctx.body = "开始导入数据"
 })
-
+/*获取商品详情的接口*/
 router.post('/getDetailGoodsInfo', async (ctx) => {
   try {
     let goodsId = ctx.request.body.goodsId
@@ -69,6 +69,16 @@ router.post('/getDetailGoodsInfo', async (ctx) => {
     ctx.body = {code: 200, message: result}
   } catch (err) {
     ctx.body = {code: 500, message: err}
+  }
+})
+/*读取大类数据的接口*/
+router.get('/getCategoryList', async (ctx) => {
+  try {
+    const Category = mongoose.model('Category')
+    let result = await Category.find().exec()
+    ctx.body = {code: 200, message: result}
+  } catch (error) {
+    ctx.body = {code: 200, message: error}
   }
 })
 
