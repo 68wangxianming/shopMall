@@ -45,29 +45,55 @@
       </swiper-slide>
     </swiper>
     <!--floor one area-->
-    <floorComponent :floorData="floor1"></floorComponent>
+    <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
+    <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
+    <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
+
+
+    <!--Hot Area-->
+    <div class="hot-area">
+      <div class="hot-title">热卖商品</div>
+      <div class="hot-goods">
+        <!--这里需要一个list组件-->
+        <van-list>
+          <van-row gutter="20">
+            <van-col span="12" v-for="(item , index) in hotGoods" :key="index">
+              <goods-info :goodsId="item.goodsId" :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price">
+
+              </goods-info>
+            </van-col>
+          </van-row>
+        </van-list>
+      </div>
+    </div>
+
   </div>
 
 </template>
 
 <script>
+  import {swiper , swiperSlide} from 'vue-awesome-swiper'
 import floorComponent from "@/components/pages/component/floorComponent";
 import { toMoney } from "@/filter/moneyFilter.js";
+import goodsInfo from '@/components/pages/component/goodsInfoComponent'
+
 
 export default {
   created() {
     this.axios({
       url: this.url.getShopingMailInfo,
       method: "get"
-    }).then(res => {
-      if (res.status == 200) {
-        this.category = res.data.data.category;
-        this.adBanner = res.data.data.advertesPicture; //获得广告图片
-        this.recommendGoods = res.data.data.recommend; //推荐商品
-        this.floor1 = res.data.data.floor1; //楼层1数据
-        this.floor1_0 = this.floor1[0];
-        this.floor1_1 = this.floor1[1];
-        this.floor1_2 = this.floor1[2];
+    }).then(response => {
+      if (response.status == 200) {
+        this.category=response.data.data.category;
+        this.adBanner = response.data.data.advertesPicture.PICTURE_ADDRESS;
+        this.bannerPicArray= response.data.data.slides;
+        this.recommendGoods = response.data.data.recommend;
+        this.floor1 = response.data.data.floor1;
+        this.floor2 = response.data.data.floor2;
+        this.floor3 = response.data.data.floor3;
+        this.floorName = response.data.data.floorName;
+        this.hotGoods = response.data.data.hotGoods;
       }
     });
   },
@@ -94,13 +120,14 @@ export default {
       category: [],
       adBanner: "",
       recommendGoods: [],
-      floor1: [],
-      floor1_0: [],
-      floor1_1: [],
-      floor1_2: []
+      floor1:[],
+      floor2:[],
+      floor3:[],
+      floorName:{},
+      hotGoods:[],  //热卖商品
     };
   },
-  components: { floorComponent },
+  components:{swiper,swiperSlide,floorComponent,goodsInfo},
   filters: {
     moneyFilter(money) {
       return toMoney(money);
