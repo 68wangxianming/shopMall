@@ -5,7 +5,10 @@ const URL = {
   getGoodsInfo: BASEURL + 'getGoodsInfo',
   registerUser: LOCALURL + 'user/register',
   login: LOCALURL + 'user/login',
-  getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo'
+  getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo',
+  getCategoryList:LOCALURL+'goods/getCategoryList',
+  getCateGorySubList : LOCALURL+'goods/getCategorySubList',  //得到小类信息
+  getGoodsListByCategorySubID : LOCALURL+'goods/getGoodsListByCategorySubID',  //得到小类商品信息
 }
 
 

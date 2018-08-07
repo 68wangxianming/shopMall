@@ -81,6 +81,28 @@ router.get('/getCategoryList', async (ctx) => {
     ctx.body = {code: 200, message: error}
   }
 })
+/*读取小类数据的接口*/
+router.post('/getCategorySubList', async (ctx) => {
+  try {
+    let categoryId = ctx.request.body.categoryId
+    const CategorySub = mongoose.model('CategorySub')
+    let result = await CategorySub.find({MALL_CATEGORY_ID: categoryId}).exec()
+    ctx.body = {code: 200, message: result}
+  } catch (error) {
+    ctx.body = {code: 500, message: error}
+  }
+})
+/*根据类别获取商品列表*/
+router.post('/getGoodsListByCategorySubID', async (ctx) => {
+  try {
+    let categorySubId = ctx.request.body.categorySubId
+    const Goods = mongoose.model('Goods')
+    let result = await Goods.find({SUB_ID: categorySubId}).exec()
+    ctx.body = {code: 200, message: result}
+  } catch (error) {
+    ctx.body = {code: 500, message: error}
+  }
+})
 
 
 module.exports = router
