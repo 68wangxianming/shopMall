@@ -70,7 +70,7 @@
         goodList:[],   //商品列表信息
         categorySubId:'', //商品子类ID
         isRefresh:false, //下拉刷新
-        errorImg:'this.src="'+require('@/assets/img/location.png')+'"',
+        errorImg:'this.src="'+require('@/assets/img/errorimg.png')+'"',
       }
     },
     filters:{
